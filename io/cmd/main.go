@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ynden/experiments/stream"
+	"github.com/ynden/experiments/io/stream"
 )
 
 func main() {
