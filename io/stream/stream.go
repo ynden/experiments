@@ -19,8 +19,8 @@ type Part struct {
 // Read takes a number of parts, and a file path as parameters.
 // It retrieves a file, and split it as byte chunks of 'nbParts' parts.
 // It returns the file's text.
-func Read(nbParts int, filePath string) {
-	bytes, err := ioutil.ReadFile("test.txt")
+func Read(nbParts int, filePath string) []byte {
+	bytes, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		panic(err)
 	}
@@ -65,4 +65,6 @@ func Read(nbParts int, filePath string) {
 	}
 
 	wg.Wait()
+
+	return result
 }
