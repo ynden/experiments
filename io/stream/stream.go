@@ -7,8 +7,6 @@ import (
 
 var wg sync.WaitGroup
 
-const nbParts int = 6
-
 // Part is a struct that represents
 // a chunk.
 type Part struct {
