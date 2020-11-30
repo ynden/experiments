@@ -1,7 +1,6 @@
-package main
+package stream
 
 import (
-	"fmt"
 	"io/ioutil"
 	"sync"
 )
@@ -10,24 +9,25 @@ var wg sync.WaitGroup
 
 const nbParts int = 6
 
-type part struct {
+// Part is a struct that represents
+// a chunk.
+type Part struct {
 	start int
 	end   int
 }
 
-func main() {
+// Read takes a number of parts, and a file path as parameters.
+// It retrieves a file, and split it as byte chunks of 'nbParts' parts.
+// It returns the file's text.
+func Read(nbParts int, filePath string) {
 	bytes, err := ioutil.ReadFile("test.txt")
 	if err != nil {
 		panic(err)
 	}
 
-	var parts []part
-
-	end := 0
-	start := 0
-
+	var parts []Part
+	var start, end int
 	length := len(bytes)
-	fmt.Println(length)
 
 	for i := 0; i < nbParts; i++ {
 		end = start + (length / nbParts)
@@ -39,7 +39,7 @@ func main() {
 			end = length - 1
 		}
 
-		pt := part{
+		pt := Part{
 			start: start,
 			end:   end,
 		}
@@ -49,7 +49,6 @@ func main() {
 	}
 
 	result := make([]byte, length)
-	fmt.Println(parts)
 
 	for i := 0; i < len(parts); i++ {
 		start := parts[i].start
@@ -66,6 +65,4 @@ func main() {
 	}
 
 	wg.Wait()
-
-	fmt.Println(string(result))
 }
